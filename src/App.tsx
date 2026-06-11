@@ -1,0 +1,270 @@
+import { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
+import { Shield, Plane, Users, Star, Award, ChevronDown, CheckCircle, Navigation, LayoutList, CheckSquare } from 'lucide-react';
+import Header from './components/Header';
+import ServicesSection from './components/ServicesSection';
+import FleetSection from './components/FleetSection';
+import DestinationsSection from './components/DestinationsSection';
+import EmptyLegsSection from './components/EmptyLegsSection';
+import CareersSection from './components/CareersSection';
+import BlogSection from './components/BlogSection';
+import ContactSection from './components/ContactSection';
+import Footer from './components/Footer';
+import QuoteModal from './components/QuoteModal';
+
+export default function App() {
+  const [activeSection, setActiveSection] = useState<string>('hero');
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+
+  // Set up passive scroll observer to highlight modern navigation anchors
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + 200;
+      const sections = ['hero', 'about', 'services', 'fleet', 'destinations', 'emptylegs', 'careers', 'blog', 'contact'];
+      
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navigateToSection = (sectionId: string) => {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      setActiveSection(sectionId);
+    }
+  };
+
+  // Parallax calculations for the visual hero header
+  const { scrollY } = useScroll();
+  const heroY = useTransform(scrollY, [0, 800], [0, 200]);
+  const heroOpacity = useTransform(scrollY, [0, 600], [1, 0]);
+
+  return (
+    <div className="bg-navy-dark text-text-main font-sans antialiased overflow-x-hidden selection:bg-luxury-gold/35 selection:text-text-main relative">
+      {/* Flight path line beams running behind background */}
+      <div className="absolute inset-y-0 left-1/4 w-[1px] bg-gradient-to-b from-transparent via-white/[0.04] to-transparent pointer-events-none" />
+      <div className="absolute inset-y-0 right-1/4 w-[1px] bg-gradient-to-b from-transparent via-white/[0.04] to-transparent pointer-events-none" />
+
+      {/* Main navigation header */}
+      <Header activeSection={activeSection} onNavigate={navigateToSection} onRequestQuote={() => setIsQuoteModalOpen(true)} />
+
+      {/* Hero Canvas Visual Section */}
+      <section id="hero" className="relative min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden select-none bg-navy-dark text-left">
+        {/* Parallax hero background */}
+        <motion.div 
+          style={{ y: heroY, opacity: heroOpacity }}
+          className="absolute inset-0 z-0"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?auto=format&fit=crop&w=1920&q=85"
+            alt="Aircraft Management private jet fleet tarmac runway backdrop"
+            className="w-full h-full object-cover object-center brightness-[0.4]"
+            referrerPolicy="no-referrer"
+          />
+          {/* High-end vector vignette masking */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-navy-dark" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/90 via-transparent to-navy-dark/90" />
+        </motion.div>
+
+        {/* High Tech Grid Mesh Overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(#c5a45f_0.5px,transparent_0.5px)] [background-size:24px_24px] opacity-15 pointer-events-none z-10" />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-20 text-left w-full">
+          <div className="max-w-4xl pt-16 md:pt-24 space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="inline-flex items-center space-x-3 px-4 py-2 rounded bg-navy-slate/60 border border-text-main/10 backdrop-blur-sm shadow-xl shadow-black/30"
+            >
+              <Award className="w-4 h-4 text-luxury-gold" />
+              <span className="text-[10px] uppercase font-mono tracking-[0.25em] text-luxury-champagne leading-none mt-0.5">
+                FAA Certified Part 135 Carrier • Pittsburgh, PA
+              </span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.2 }}
+              className="space-y-4"
+            >
+              <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-silver-gradient-static font-light leading-[1.05] tracking-tight">
+                Beyond Luxury.<br />
+                <span className="italic font-normal text-gold-gradient-static">Sovereign Flight</span>
+              </h1>
+              <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-2xl font-light leading-relaxed pt-2">
+                Aircraft Management Group provides end-to-end global charter operations, uncompromising turnkey jet management offsets, and broker advisory services based out of Pittsburgh International Airport.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 pt-4"
+            >
+              <button
+                onClick={() => setIsQuoteModalOpen(true)}
+                className="px-8 py-4 rounded text-sm tracking-widest uppercase font-bold text-navy-dark bg-gradient-to-r from-luxury-gold via-luxury-champagne to-luxury-gold hover:opacity-95 shadow-lg shadow-luxury-gold/25 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center space-x-2"
+              >
+                <span>Request a Flight Quote</span>
+              </button>
+              <button
+                onClick={() => navigateToSection('fleet')}
+                className="px-8 py-4 rounded border border-white/20 hover:border-luxury-gold text-xs font-semibold tracking-widest uppercase text-white hover:text-luxury-gold bg-transparent hover:bg-luxury-gold/5 transition-all duration-300 flex items-center justify-center space-x-2.5 cursor-pointer"
+              >
+                <span>Active Registry</span>
+                <Plane className="w-4 h-4 text-luxury-gold -rotate-45" />
+              </button>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Scroll helper indicators */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center space-y-2 pointer-events-none">
+          <span className="text-[9px] uppercase tracking-[0.3em] text-text-main/30 font-mono">operational details</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+          >
+            <ChevronDown className="w-5 h-5 text-luxury-gold/54" />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Operational Stats Center */}
+      <section className="bg-navy-dark py-16 border-y border-text-main/10 relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+            {[
+              { label: 'Uncompromised Records', val: 'ARGUS Rated', desc: 'Wyvern registered compliance safety audits' },
+              { label: 'Airframe Competence', val: '240,000+', desc: 'Direct safe operation hours logged bases' },
+              { label: 'Destinations Worldwide', val: '12,000+', desc: 'Global airstrips accessed anytime' },
+              { label: 'PIT Hangar Base', val: 'Pittsburgh, PA', desc: 'Direct corporate maintenance & hangar assets' },
+            ].map((stat, i) => (
+              <div key={i} className="text-left space-y-1">
+                <p className="text-[10px] uppercase font-mono tracking-widest text-luxury-gold font-semibold">{stat.label}</p>
+                <h3 className="font-serif text-3xl md:text-4xl text-text-main font-light tracking-tight">{stat.val}</h3>
+                <p className="text-xs text-text-main/43 font-light leading-snug pt-1">{stat.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-24 bg-navy-dark relative text-left">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Column 1: Image Frame */}
+            <div className="lg:col-span-5 relative">
+              <div className="relative aspect-square md:max-w-md mx-auto lg:mx-0 rounded-2xl overflow-hidden glass-panel border border-text-main/10 p-2 gold-glow">
+                <img
+                  src="/images/about-us.png"
+                  alt="Aircraft Management Group Team on the tarmac"
+                  className="w-full h-full object-cover rounded-xl brightness-[0.75]"
+                />
+                <div className="absolute inset-2 bg-gradient-to-t from-navy-dark via-transparent to-transparent rounded-xl" />
+                <div className="absolute bottom-6 left-6 right-6 p-4 rounded-lg bg-navy-slate/90 backdrop-blur border border-text-main/10">
+                  <div className="flex items-center space-x-2 text-luxury-gold mb-1">
+                    <Star className="w-4 h-4 fill-luxury-gold" />
+                    <span className="text-[10px] uppercase tracking-wider font-mono font-bold">FAA Certified Carrier</span>
+                  </div>
+                  <p className="text-[11px] text-text-main/70 font-light">Part 135 on-demand flight operations between the US, Canada, and Worldwide.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Column 2: text and credentials */}
+            <div className="lg:col-span-7 space-y-6">
+              <p className="text-xs uppercase tracking-[0.35em] text-luxury-gold font-semibold font-mono">Established April 2006</p>
+              <h2 className="font-serif text-4xl md:text-5xl text-text-main font-light tracking-tight leading-tight">
+                About <span className="italic font-normal text-gold-gradient">Aircraft Management Group</span>
+              </h2>
+              <div className="w-12 h-[1px] bg-luxury-gold my-4" />
+              
+              <div className="space-y-4 text-text-main/70 text-sm md:text-base font-light leading-relaxed">
+                <p>
+                  Aircraft Management Group, Inc. provides aircraft management and private aircraft charter services from the Pittsburgh International Airport and throughout the US, Canada, Mexico and the Caribbean.
+                </p>
+                <p>
+                  Aircraft Management Group was founded in April 2006 as a Part 91 Operator with the mandate to provide the best possible aircraft management services for our clients and their private aircraft. Our particular expertise is serving clients who share ownership of their aircraft with one or more parties. We make it possible to manage co-owned aircraft seamlessly.
+                </p>
+                <p>
+                  Since March 2009, Aircraft Management Group is the recipient of a Federal Aviation Regulation (FAR) Part 135 Certificate from the Federal Aviation Administration (FAA) allowing the company to operate on-demand charter in the US. Additionally, Aircraft Management Group was granted a Canadian Foreign Air Operating Certificate (FAOC) from Transport Canada as well as operating authority from the Canadian Transportation Agency (CTA) allowing the company to operate Part 135 on-demand aircraft charters between the US and Canada and vice-versa.
+                </p>
+                <p>
+                  We continuously strive to maintain the highest standards of safety and service by providing experienced aircrew, exceeding FAA training requirements and maintaining our clients’ aircraft with the industry’s best professionals. We are proud to be Aircraft Management Group.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                {[
+                  'Double-Captain redundant crew setups on all Part 135 operations',
+                  'Rigid bi-annual aircraft simulator training sessions',
+                  'FAA compliant dispatch systems operational 24/7/365',
+                  'Turnkey co-owned aircraft management & scheduling systems',
+                ].map((item, id) => (
+                  <div key={id} className="flex items-start space-x-3 text-xs text-text-main/80 font-light">
+                    <CheckCircle className="w-4 h-4 text-luxury-gold shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-6">
+                <button
+                  onClick={() => navigateToSection('services')}
+                  className="px-6 py-3 border border-text-main/10 hover:border-luxury-gold text-xs font-semibold tracking-wider uppercase text-luxury-gold hover:bg-luxury-gold/5 rounded transition-all cursor-pointer"
+                >
+                  Inspect Our Capabilities
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section Block */}
+      <ServicesSection onRequestQuote={() => setIsQuoteModalOpen(true)} />
+
+      {/* Fleet Section Block */}
+      <FleetSection onSelectAircraftForQuote={() => setIsQuoteModalOpen(true)} onRequestQuote={() => setIsQuoteModalOpen(true)} />
+
+      {/* Destinations Guide Block */}
+      <DestinationsSection onRequestQuote={() => setIsQuoteModalOpen(true)} />
+
+      {/* Empty Legs Live API Board Block */}
+      <EmptyLegsSection />
+
+      {/* Crew and Careers Registry Block */}
+      <CareersSection />
+
+      {/* Aviation Blog Articles */}
+      <BlogSection />
+
+      {/* Contact & Careers Block */}
+      <ContactSection />
+
+      {/* Corporate Footer Block */}
+      <Footer onNavigate={navigateToSection} onRequestQuote={() => setIsQuoteModalOpen(true)} />
+
+      {/* JetInsight Global Quote Request Modal Embed */}
+      <QuoteModal isOpen={isQuoteModalOpen} onClose={() => setIsQuoteModalOpen(false)} />
+    </div>
+  );
+}

@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-luxury-gold: var(--luxury-gold);
+  --color-luxury-bronze: #8a6d3b;
+  --color-luxury-champagne: var(--luxury-champagne);
+  
+  --color-navy-dark: var(--bg-main);
+  --color-navy-slate: var(--bg-card);
+  --color-navy-light: var(--bg-hover);
+  
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  
+  --animate-border-beam: border-beam 4s linear infinite;
+  --animate-shine: shine 8s ease infinite;
+}
+
+@layer base {
+  :root {
+    --bg-main: #f8f9fa;
+    --bg-card: #ffffff;
+    --bg-hover: #f1f3f5;
+    
+    --text-main: #090b0e;
+    --text-muted: #1e293b;
+    --luxury-gold: #9a7b45;
+    --luxury-champagne: #7c6232;
+  }
+
+  :root.dark, body.dark, .dark {
+    --bg-main: #090b0e;
+    --bg-card: #13171e;
+    --bg-hover: #1e242f;
+    
+    --text-main: #f1f3f5;
+    --text-muted: rgba(226, 232, 240, 0.7);
+    --luxury-gold: #c5a45f;
+    --luxury-champagne: #ecd39d;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+  }
+}
+
+/* Custom scrollbar styling to match luxury theme */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-hover);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c5a45f;
+}
+
+/* Glassmorphism utility card glows */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(9, 11, 14, 0.08);
+  opacity: 1;
+}
+.dark .glass-panel {
+  background: rgba(19, 23, 30, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  opacity: 1;
+}
+
+.gold-glow {
+  box-shadow: 0 0 25px rgba(197, 164, 95, 0.1);
+}
+
+/* Text linear gradients */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #7c6232 0%, #9a7b45 50%, #5e4a26 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.dark .text-gold-gradient {
+  background: linear-gradient(135deg, #ecd39d 0%, #c5a45f 50%, #8a6d3b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-silver-gradient {
+  background: linear-gradient(135deg, #090b0e 0%, #475569 50%, #1e293b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.dark .text-silver-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #64748b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Light mode contrast boosts for common text opacity levels */
+html:not(.dark) .text-text-muted\/70 {
+  color: rgba(30, 41, 59, 0.85) !important;
+}
+html:not(.dark) .text-text-muted\/65 {
+  color: rgba(30, 41, 59, 0.80) !important;
+}
+html:not(.dark) .text-text-muted\/60 {
+  color: rgba(30, 41, 59, 0.78) !important;
+}
+html:not(.dark) .text-text-muted\/55 {
+  color: rgba(30, 41, 59, 0.75) !important;
+}
+html:not(.dark) .text-text-muted\/50 {
+  color: rgba(30, 41, 59, 0.70) !important;
+}
+html:not(.dark) .text-text-muted\/40 {
+  color: rgba(30, 41, 59, 0.65) !important;
+}
+html:not(.dark) .text-text-muted\/30 {
+  color: rgba(30, 41, 59, 0.55) !important;
+}
+html:not(.dark) .text-text-main\/80 {
+  color: rgba(9, 11, 14, 0.90) !important;
+}
+html:not(.dark) .text-text-main\/70 {
+  color: rgba(9, 11, 14, 0.85) !important;
+}
+html:not(.dark) .text-text-main\/60 {
+  color: rgba(9, 11, 14, 0.78) !important;
+}
+html:not(.dark) .text-text-main\/55 {
+  color: rgba(9, 11, 14, 0.75) !important;
+}
+html:not(.dark) .text-text-main\/50 {
+  color: rgba(9, 11, 14, 0.70) !important;
+}
+html:not(.dark) .text-text-main\/43 {
+  color: rgba(9, 11, 14, 0.65) !important;
+}
+html:not(.dark) .text-text-main\/40 {
+  color: rgba(9, 11, 14, 0.65) !important;
+}
+html:not(.dark) .text-text-main\/30 {
+  color: rgba(9, 11, 14, 0.55) !important;
+}
+html:not(.dark) .text-text-main\/20 {
+  color: rgba(9, 11, 14, 0.45) !important;
+}
+
+.text-silver-gradient-static {
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #64748b 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.text-gold-gradient-static {
+  background: linear-gradient(135deg, #ecd39d 0%, #c5a45f 50%, #8a6d3b 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}

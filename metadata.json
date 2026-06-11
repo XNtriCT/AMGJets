@@ -1,0 +1,6 @@
+{
+  "name": "Aircraft Management Group",
+  "description": "High-performance digital platform for Aircraft Management Group (AMG). Luxury private jet charter, turnkey aircraft management, and acquisitions based out of Pittsburgh, PA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
