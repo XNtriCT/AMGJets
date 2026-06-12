@@ -11,6 +11,7 @@ import BlogSection from './components/BlogSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import QuoteModal from './components/QuoteModal';
+import ScrollVideoCanvas from './components/ScrollVideoCanvas';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<string>('hero');
@@ -54,6 +55,9 @@ export default function App() {
 
   return (
     <div className="bg-navy-dark text-text-main font-sans antialiased overflow-x-hidden selection:bg-luxury-gold/35 selection:text-text-main relative">
+      {/* Scroll Video Canvas Backdrop */}
+      <ScrollVideoCanvas />
+
       {/* Flight path line beams running behind background */}
       <div className="absolute inset-y-0 left-1/4 w-[1px] bg-gradient-to-b from-transparent via-white/[0.04] to-transparent pointer-events-none" />
       <div className="absolute inset-y-0 right-1/4 w-[1px] bg-gradient-to-b from-transparent via-white/[0.04] to-transparent pointer-events-none" />
@@ -62,21 +66,15 @@ export default function App() {
       <Header activeSection={activeSection} onNavigate={navigateToSection} onRequestQuote={() => setIsQuoteModalOpen(true)} />
 
       {/* Hero Canvas Visual Section */}
-      <section id="hero" className="relative min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden select-none bg-navy-dark text-left">
+      <section id="hero" className="relative min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden select-none bg-transparent text-left">
         {/* Parallax hero background */}
         <motion.div 
           style={{ y: heroY, opacity: heroOpacity }}
           className="absolute inset-0 z-0"
         >
-          <img
-            src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?auto=format&fit=crop&w=1920&q=85"
-            alt="Aircraft Management private jet fleet tarmac runway backdrop"
-            className="w-full h-full object-cover object-center brightness-[0.4]"
-            referrerPolicy="no-referrer"
-          />
-          {/* High-end vector vignette masking */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-navy-dark" />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/90 via-transparent to-navy-dark/90" />
+          {/* High-end vector vignette masking - class-based visibility */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-[#090b0e] hero-vignette" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#090b0e]/90 via-transparent to-[#090b0e]/90 hero-vignette" />
         </motion.div>
 
         {/* High Tech Grid Mesh Overlay */}
@@ -102,11 +100,11 @@ export default function App() {
               transition={{ duration: 0.9, delay: 0.2 }}
               className="space-y-4"
             >
-              <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-silver-gradient-static font-light leading-[1.05] tracking-tight">
+              <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-silver-gradient font-light leading-[1.05] tracking-tight">
                 Beyond Luxury.<br />
-                <span className="italic font-normal text-gold-gradient-static">Sovereign Flight</span>
+                <span className="italic font-normal text-gold-gradient">Sovereign Flight</span>
               </h1>
-              <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-2xl font-light leading-relaxed pt-2">
+              <p className="text-sm sm:text-base md:text-lg text-text-main/80 max-w-2xl font-light leading-relaxed pt-2">
                 Aircraft Management Group provides end-to-end global charter operations, uncompromising turnkey jet management offsets, and broker advisory services based out of Pittsburgh International Airport.
               </p>
             </motion.div>
@@ -147,7 +145,7 @@ export default function App() {
       </section>
 
       {/* Operational Stats Center */}
-      <section className="bg-navy-dark py-16 border-y border-text-main/10 relative">
+      <section className="bg-transparent py-16 border-y border-text-main/10 relative">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
             {[
@@ -167,7 +165,7 @@ export default function App() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-24 bg-navy-dark relative text-left">
+      <section id="about" className="py-24 bg-transparent relative text-left">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Column 1: Image Frame */}

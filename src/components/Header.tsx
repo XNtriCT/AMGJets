@@ -50,19 +50,19 @@ export default function Header({ activeSection, onNavigate, onRequestQuote }: He
             : 'bg-transparent py-6'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between xl:-translate-x-[58.5px]">
           {/* Logo with clean crest */}
           <div 
-            className={`flex items-center cursor-pointer group shrink-0 ${
+            className={`flex-1 min-w-max flex items-center justify-start cursor-pointer group shrink-0 ${
               isScrolled ? 'text-text-main' : 'text-white'
             }`}
             onClick={() => handleItemClick('hero')}
           >
-            <BrandLogo className="h-10 w-auto xl:h-12 transform group-hover:scale-105 transition-transform duration-300 drop-shadow-md" />
+            <BrandLogo className="h-16 w-auto xl:h-22 object-contain transform group-hover:scale-105 transition-transform duration-300 drop-shadow-md" />
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden xl:flex items-center space-x-1 xl:space-x-1.5">
+          <nav className="hidden xl:flex items-center space-x-1 xl:space-x-1.5 flex-none">
             {menuItems.map((item) => (
               <button
                 key={item.id}
@@ -88,7 +88,7 @@ export default function Header({ activeSection, onNavigate, onRequestQuote }: He
           </nav>
 
           {/* Desktop CTA Buttons */}
-          <div className="hidden xl:flex items-center space-x-3 xl:space-x-4 shrink-0">
+          <div className="hidden xl:flex items-center justify-end space-x-3 xl:space-x-4 flex-1 min-w-max">
             <button
               onClick={() => document.documentElement.classList.toggle('dark')}
               className={`p-1.5 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors ${
